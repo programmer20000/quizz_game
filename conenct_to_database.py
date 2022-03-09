@@ -26,9 +26,11 @@ class DB:
 
 
     def add_dates(self,data):
+        self.connect_to_database()
         insert_in_database = f"""
         insert into Question(question) values("{data[0]}");
 insert into Answers(answers,question_id) values("{data[1]}",(select question_id from Question where question ="{data[0]}"));
 insert into Answers(answers,question_id) values("{data[2]}",(select question_id from Question where question ="{data[0]}"));
 """
         self.connect.cursor().execute(insert_in_database)
+        self.connect.commit()
